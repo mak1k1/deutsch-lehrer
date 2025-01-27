@@ -1,0 +1,12 @@
+pyproject.toml
+app/__init__.py
+app/ai_module.py
+app/anki_module.py
+app/database.py
+app/main.py
+app/quiz_module.py
+deutsch_lehrer.egg-info/PKG-INFO
+deutsch_lehrer.egg-info/SOURCES.txt
+deutsch_lehrer.egg-info/dependency_links.txt
+deutsch_lehrer.egg-info/requires.txt
+deutsch_lehrer.egg-info/top_level.txt

@@ -1,0 +1,7 @@
+Metadata-Version: 2.2
+Name: deutsch_lehrer
+Version: 0.1.0
+Summary: Your German Tutor Application
+Author-email: Your Name <youremail@example.com>
+Requires-Dist: openai
+Requires-Dist: python-dotenv

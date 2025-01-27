@@ -1,0 +1,26 @@
+# Environment files
+.env
+.env.local
+.env.*
+!.env.example
+
+# Virtual environment directories
+venv/
+.venv/
+.virtualenv/
+
+# Gradio cache
+.gradio/
+
+
+# Database
+german_tutor.db
+
+# Static files
+static/
+
+# Gradio cache
+.gradio/
+
+# Pycache
+app/__pycache__/
