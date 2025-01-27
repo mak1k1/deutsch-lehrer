@@ -5,10 +5,24 @@ def create_anki_deck(lesson_content):
     deck_id = int(uuid.uuid4()) % (10**10)
     deck = genanki.Deck(deck_id, "German Lesson")
     
-    for word, meaning in lesson_content["vocabulary"].items():
+    for vocab in lesson_content["lesson"]["vocabulary"]:
         note = genanki.Note(
             model=genanki.BASIC_MODEL,
-            fields=[word, meaning]
+            fields=[vocab["word"], vocab["translation"]]
+        )
+        deck.add_note(note)
+
+    for grammar in lesson_content["lesson"]["grammar"]:
+        note = genanki.Note(
+            model=genanki.BASIC_MODEL,
+            fields=[grammar["explanation"], grammar["example"]]
+        )
+        deck.add_note(note)
+
+    for assignment in lesson_content["lesson"]["assignments"]:
+        note = genanki.Note(
+            model=genanki.BASIC_MODEL,
+            fields=[assignment["question"], assignment["answer"]]
         )
         deck.add_note(note)
     

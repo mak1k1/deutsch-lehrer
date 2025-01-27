@@ -1,11 +1,20 @@
 import sqlite3
-
-import sqlite3
+import json
 
 def initialize_database():
     # Connect to the SQLite database (creates the file if it doesn't exist)
     conn = sqlite3.connect("german_tutor.db")
     cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS lessons (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        level TEXT NOT NULL,
+        theme TEXT NOT NULL,
+        lesson_json TEXT NOT NULL
+    )
+    """)
+
 
     # Create the necessary tables if they don't exist
     cursor.execute("""
@@ -52,5 +61,22 @@ def log_progress(category, content):
     cursor = conn.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS progress (id INTEGER PRIMARY KEY, date TEXT, category TEXT, content TEXT)")
     cursor.execute("INSERT INTO progress (date, category, content) VALUES (datetime('now'), ?, ?)", (category, content))
+    conn.commit()
+    conn.close()
+
+def save_lesson_to_db(lesson_content):
+    conn = sqlite3.connect("german_tutor.db")
+    cursor = conn.cursor()
+
+    # Insert the lesson as a whole JSON object
+    cursor.execute("""
+        INSERT INTO lessons (level, theme, lesson_json)
+        VALUES (?, ?, ?)
+    """, (
+        lesson_content["lesson"]["level"],
+        lesson_content["lesson"]["theme"],
+        json.dumps(lesson_content)
+    ))
+
     conn.commit()
     conn.close()

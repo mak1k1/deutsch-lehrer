@@ -3,29 +3,54 @@ import json
 from app import client
 
 def generate_lesson_with_gpt(level, theme):
-    # Define the chat messages
     messages = [
         {"role": "system", "content": "You are a German language tutor."},
         {"role": "user", "content": f"""
-            Create a lesson for a student at level {level} about the theme '{theme}'. 
-            Provide:
-            - A list of 5 vocabulary words with translations.
-            - Two grammar rules.
-            Output the result as plain JSON without any Markdown formatting or additional text.
-            Use this format:
-            {{
-                "vocabulary": {{
-                    "word1": "translation1",
-                    "word2": "translation2",
-                    "word3": "translation3",
-                    "word4": "translation4",
-                    "word5": "translation5"
-                }},
+        Create a complete lesson for a German learner at level {level} on the theme '{theme}'. 
+        The lesson must follow this exact JSON structure:
+        {{
+            "lesson": {{
+                "level": "{level}",
+                "theme": "{theme}",
+                "vocabulary": [
+                    {{
+                        "word": "word1",
+                        "translation": "translation1",
+                        "example_sentence": "example sentence1"
+                    }},
+                    {{
+                        "word": "word2",
+                        "translation": "translation2",
+                        "example_sentence": "example sentence2"
+                    }}
+                ],
                 "grammar": [
-                    "Grammar rule 1",
-                    "Grammar rule 2"
+                    {{
+                        "rule": "Grammar rule 1",
+                        "explanation": "Explanation of rule 1",
+                        "example": "Example usage of rule 1"
+                    }},
+                    {{
+                        "rule": "Grammar rule 2",
+                        "explanation": "Explanation of rule 2",
+                        "example": "Example usage of rule 2"
+                    }}
+                ],
+                "assignments": [
+                    {{
+                        "type": "multiple_choice",
+                        "question": "Question text",
+                        "options": ["Option 1", "Option 2", "Option 3"],
+                        "answer": "Correct option"
+                    }},
+                    {{
+                        "type": "fill_in_the_blank",
+                        "question": "Sentence with a ____.",
+                        "answer": "correct word"
+                    }}
                 ]
-            }}.
+            }}
+        }}
         """}
     ]
 
@@ -35,7 +60,7 @@ def generate_lesson_with_gpt(level, theme):
             model="deepseek-chat",
             messages=messages,
             temperature=0.7,
-            max_tokens=500,
+            max_tokens=1500,
             response_format={"type": "json_object"}
         )
 
